@@ -2,7 +2,7 @@
 <H1 align="center">Guaroot, Groupme Spam Classifier</H1>
 <H3 align="center">"Root out the bad stuff🍂"</H3>
 <p align="center">
-  <img src="https://github.com/Kuria-Mbatia/Guaroot-GroupMe-Filter/blob/main/Guaroot%20Images/Untitled%20design%20(1).png" />
+  <img src="https://github.com/Kuria-Mbatia/Guaroot-GroupMe-Filter/blob/main/Guaroot%20Images/Untitled%20design%20(8)-modified.png" />
 </p>
 
 # GroupMe Bot
