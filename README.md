@@ -5,65 +5,247 @@
   <img src="https://github.com/Kuria-Mbatia/Guaroot/blob/main/Guaroot%20Images/file%20(1).jpg" />
 </p>
 
-<h2>Formerly known as Nike-Zeus</h2>
+# GroupMe Bot
 
-### This GroupMe bot utilizes Natural Language Processing (NLP) techniques and machine learning to analyze messages, detect spam, and provide intelligent responses in a GroupMe chat.
+A spam-detecting GroupMe bot with machine learning capabilities. This bot helps moderate GroupMe chats by detecting spam, monitoring message rates, and managing user interactions.
 
-## What the Code Does
-### Spam and Fraudulent Message Detection:
->Guaroot employs an SVM (Support Vector Machine) classifier trained on a dataset stored in a CSV file (spam.csv) to identify spam and potentially fraudulent messages. It utilizes TF-IDF (Term Frequency-Inverse Document Frequency) features to represent messages and assigns spam probability scores.
+<div align="center">
 
-### Keyword-based Flagging: 
->The bot checks messages against predefined sets of keywords related to selling, tickets, concerts, and other flagged words. Messages containing these keywords are flagged and added to the user's message cache for further analysis.
-### Rate Limiting:
->To prevent users from sending messages too quickly, Guaroot implements rate limiting. If a user exceeds the defined rate limit, the bot sends a warning message to maintain a controlled chat environment.
-### User and Message Management:
->When a message is flagged as spam or fraudulent, Guaroot has the ability to remove the offending user from the group and delete the flagged message using the GroupMe API.
-### Message Caching and Duplicate Detection:
->The bot maintains a cache of recently sent messages for each user and checks for duplicates to avoid processing the same message multiple times, optimizing its efficiency.
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.68.0+-00a393.svg)](https://fastapi.tiangolo.com)
 
+</div>
 
-### Model Retraining:
->Guaroot continuously updates its training dataset (spam.csv) with newly flagged spam messages and triggers a model retraining process in a separate thread. This ensures that the classifier stays up to date with the latest spam patterns and maintains its effectiveness over time.
->An incrimental learning approach (SGD) will be used later on for better resource management rather than frequent retraining.  
+## Features
 
-# How It Works
-## Guaroot is a Flask web application that listens for incoming POST requests from the GroupMe webhook. It processes messages through a series of steps, including text preprocessing, spam classification, keyword matching, action taking, rate limiting, and response generation.
+- 🤖 ML-based spam detection
+- 🚫 Rate limiting and flood protection
+- 🔍 Keyword filtering and moderation
+- 💾 Message caching
+- 👥 Group management tools
+- 📊 Activity monitoring
 
+## Prerequisites
 
-# Code Structure
-The Guaroot codebase is organized into several key functions:
->```
->load_training_data(): Loads spam classification training data from a CSV file.
->preprocess_text(): Preprocesses text by tokenizing, removing stopwords, and lemmatizing.
->classify_message(): Assigns a spam probability score to a message using a trained SVM classifier.
->send_message(): Sends a message to the GroupMe chat.
->is_duplicate_message(): Checks if a message is a duplicate.
->is_spam(): Determines if a message is spam based on keyword matching and message history.
->is_rate_limited(): Implements rate limiting for user messages.
->handle_message(): Main function for processing incoming messages, detecting spam, and generating responses.
->```
+Before deploying the bot, ensure you have:
 
-# NLP Techniques and Machine Learning
-Guaroot utilizes a combination of NLP techniques and machine learning algorithms:
-Text Preprocessing: Tokenization, stopword removal, and lemmatization using NLTK.
-Feature Extraction: TF-IDF (Term Frequency-Inverse Document Frequency) vectorization.
-Machine Learning: Support Vector Machine (SVM) classifier for spam detection.
-Keyword Matching: Regular expressions for detecting specific patterns in messages.
+- Python 3.8 or higher
+- A GroupMe account
+- Your Bot ID from [dev.groupme.com](https://dev.groupme.com)
+- Git installed
 
+## Quick Start (Local Development)
 
-### Probability Scoring on messages 
->The bot assigns spam probability scores using a Support Vector Machine (SVM) classifier. It uses the ```classify_message()``` function, which preprocesses the input text and uses the pre-trained SVM model to predict the probability of a message being spam. Current efficieny rates are between 97.648% - 98.8220% accurate on assigning a probability score on if a message is spam or not.
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/groupme-bot.git
+cd groupme-bot
+```
 
-## NLP Techniques and Machine Learning
->Text preprocessing: Tokenization, stopword removal, and lemmatization using NLTK [Source](https://www.kaggle.com/code/awadhi123/text-preprocessing-using-nltk)
->
->Feature extraction: TF-IDF (Term Frequency-Inverse Document Frequency) vectorization [Source](https://en.wikipedia.org/wiki/Tf%E2%80%93idf)
->
->Machine learning: Support Vector Machine (SVM) classifier for spam detection [Source](https://towardsdatascience.com/support-vector-machine-introduction-to-machine-learning-algorithms-934a444fca47)
->
->Keyword matching: Regular expressions for detecting specific patterns in messages [Source](https://towardsdatascience.com/keyword-extraction-process-in-python-with-natural-language-processing-nlp-d769a9069d5c)
+2. **Set up virtual environment**
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
 
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+```
+
+3. **Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+4. **Configure environment variables**
+```bash
+# Create .env file
+echo "BOT_ID=your_bot_id_here
+GROUP_ID=your_group_id_here" > .env
+```
+
+5. **Run the bot**
+```bash
+python __main__.py
+```
+
+## Deployment Options
+
+### Option 1: Local Deployment with LocalTunnel
+
+1. **Install LocalTunnel**
+```bash
+npm install -g localtunnel
+```
+
+2. **Start your bot**
+```bash
+python __main__.py
+```
+
+3. **Create tunnel**
+```bash
+lt --port 5000
+```
+
+4. Update your bot's callback URL at dev.groupme.com with the LocalTunnel URL
+
+### Option 2: Heroku Deployment
+
+1. **Install Heroku CLI and login**
+```bash
+# Install Heroku CLI from https://devcenter.heroku.com/articles/heroku-cli
+heroku login
+```
+
+2. **Create Heroku app**
+```bash
+heroku create your-bot-name
+```
+
+3. **Configure environment variables**
+```bash
+heroku config:set BOT_ID=your_bot_id
+heroku config:set GROUP_ID=your_group_id
+```
+
+4. **Deploy**
+```bash
+git push heroku master
+```
+
+### Option 3: AWS Elastic Beanstalk
+
+1. **Install EB CLI**
+```bash
+pip install awsebcli
+```
+
+2. **Initialize and deploy**
+```bash
+eb init -p python-3.8 groupme-bot
+eb create groupme-bot-env
+eb setenv BOT_ID=your_bot_id GROUP_ID=your_group_id
+eb deploy
+```
+
+### Option 4: Google Cloud App Engine
+
+1. **Install Google Cloud SDK and initialize**
+```bash
+gcloud init
+```
+
+2. **Create app.yaml**
+```yaml
+runtime: python38
+env_variables:
+  BOT_ID: "your_bot_id"
+  GROUP_ID: "your_group_id"
+```
+
+3. **Deploy**
+```bash
+gcloud app deploy
+```
+
+### Option 5: Azure App Service
+
+1. **Install Azure CLI and login**
+```bash
+az login
+```
+
+2. **Create and deploy**
+```bash
+az group create --name groupmebot-rg --location eastus
+az appservice plan create --name groupmebot-plan --resource-group groupmebot-rg --sku FREE
+az webapp create --name your-bot-name --resource-group groupmebot-rg --plan groupmebot-plan
+az webapp config appsettings set --name your-bot-name --resource-group groupmebot-rg --settings BOT_ID=your_bot_id GROUP_ID=your_group_id
+az webapp up --name your-bot-name --resource-group groupmebot-rg
+```
+
+## Configuration
+
+### Spam Detection Settings
+Edit `spam_detection.py` to adjust:
+- Spam detection thresholds
+- ML model parameters
+- Training data sources
+
+### Rate Limiting
+In `utils.py`:
+```python
+RATE_LIMIT_WINDOW = 60  # Seconds
+RATE_LIMIT_COUNT = 100  # Max messages per window
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **ModuleNotFoundError**
+```bash
+pip install -r requirements.txt
+```
+
+2. **Connection Refused**
+- Check if GroupMe API is accessible
+- Verify bot token and ID
+- Ensure port 5000 is available
+
+3. **Rate Limiting Issues**
+- Adjust `RATE_LIMIT_WINDOW` and `RATE_LIMIT_COUNT`
+- Check GroupMe API limits
+
+### Deployment-Specific Issues
+
+**Heroku**
+```bash
+heroku logs --tail
+```
+
+**AWS**
+```bash
+eb logs
+```
+
+**Google Cloud**
+```bash
+gcloud app logs tail
+```
+
+**Azure**
+- Check logs in Azure portal
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. Commit your changes
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+4. Push to the branch
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+5. Open a Pull Request
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Acknowledgments
+
+* [GroupMe API Documentation](https://dev.groupme.com/docs/v3)
+* [FastAPI](https://fastapi.tiangolo.com)
+* [scikit-learn](https://scikit-learn.org/)
 
 
 
