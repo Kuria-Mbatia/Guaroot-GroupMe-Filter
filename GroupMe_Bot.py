@@ -414,7 +414,7 @@ def root():
 if __name__ == "__main__":
     print(f"Starting server with BOT_ID: {BOT_ID}")
     
-    #start initial trained model
+    
     train_model()
     #send_message("Nike-Zues is starting up!\nThreat Detection System Online...\nThreat Aquisition System Online...\nThreat Response System Online...")
     app.run(debug=True, port=5000)#Yes, ik this is an issue, ill switch to s3 tommorow - Kuria
