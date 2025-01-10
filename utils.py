@@ -86,12 +86,11 @@ class APIBatcher:
 
 api_batcher = APIBatcher()
 
-# Add these functions to utils.py
 
 def update_bot_avatar(avatar_url):
     """Update the bot's avatar image"""
     try:
-        # GroupMe API endpoint for updating a bot
+        # GroupMe API endpoint for updating 
         url = f"{API_ROOT}bots"
         
         # Get the current bot info first
